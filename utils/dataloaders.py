@@ -706,6 +706,10 @@ class LoadImagesAndLabels(Dataset):
                 if nl:
                     labels[:, 1] = 1 - labels[:, 1]
 
+            # bgr
+            if random.random() < hyp['bgr']:
+                img = img[..., ::-1]
+
             # Cutouts
             # labels = cutout(img, labels, p=0.5)
             # nl = len(labels)  # update after cutout
