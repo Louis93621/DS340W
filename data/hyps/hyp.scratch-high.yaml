@@ -28,4 +28,6 @@ fliplr: 0.5  # image flip left-right (probability)
 mosaic: 1.0  # image mosaic (probability)
 mixup: 0.15  # image mixup (probability)
 copy_paste: 0.3  # segment copy-paste (probability)
-bgr: 0.5  # bgr -> rgb (probability)
+# assert bgr + gray + origin = 1
+bgr: 0.333  # bgr -> rgb (probability)
+gray: 0.333 # brg -> gray (probability)
