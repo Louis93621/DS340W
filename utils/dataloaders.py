@@ -706,6 +706,15 @@ class LoadImagesAndLabels(Dataset):
                 if nl:
                     labels[:, 1] = 1 - labels[:, 1]
 
+            # gray and brg
+            _p = random.random()
+            if _p < hyp['bgr']:
+                img = img[..., ::-1]
+            elif _p < hyp['bgr'] + hyp['gray']:
+                img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+                img = np.stack((img, img, img), axis=-1)
+            del _p
+
             # Cutouts
             # labels = cutout(img, labels, p=0.5)
             # nl = len(labels)  # update after cutout
