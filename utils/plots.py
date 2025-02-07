@@ -184,6 +184,11 @@ def feature_visualization(x, module_type, stage, n=32, save_dir=Path('runs/detec
     n:              Maximum number of feature maps to plot
     save_dir:       Directory to save results
     """
+
+    # to handle both tensors and tuples
+    if isinstance(x, tuple):
+        x = x[0] # Extract the first element from the tuple if x is a tuple
+
     if 'Detect' not in module_type:
         batch, channels, height, width = x.shape  # batch, channels, height, width
         if height > 1 and width > 1:
