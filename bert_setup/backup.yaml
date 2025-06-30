@@ -1,0 +1,10 @@
+Dir: 
+  - - .pyenv 
+    - /root/.pyenv
+  - - .local/share/virtualenvs
+    - /root/.local/share/virtualenvs
+  - - .cache/pip
+    - /root/.cache/pip
+File: 
+  - - .zshrc 
+    - /root/.zshrc

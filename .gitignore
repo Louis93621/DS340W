@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Training runs and logs
+runs/
+
+# Model weights
+*.pt
+*.pth
+
+# Archives
+*.zip
+*.gz
+*.tar
+
+# Local config files (that shouldn't be shared)
+opt.yaml
+hyp.yaml
+
+# IDE and OS specific files
+.idea/
+.vscode/
+*.DS_Store
