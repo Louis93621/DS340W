@@ -1,0 +1,54 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: release
+spec:
+  pipelineSpec:
+    tasks:
+    - name: from-build-pack
+      resources: {}
+      taskSpec:
+        metadata: {}
+        stepTemplate:
+          image: uses:vexcel-data/jx3-tekton-catalog/agent/0.1/release.yaml@versionStream
+          name: ""
+          resources:
+            limits: {}
+          workingDir: /workspace/source
+        steps:
+        - image: uses:vexcel-data/jx3-tekton-catalog/task/git/0.1/gitclone.yaml@versionStream
+          name: ""
+          resources: {}
+        - image: uses:vexcel-data/jx3-tekton-catalog/task/release-version/0.1/nextversion-master-minor.yaml@versionStream
+          name: "nextversion-master-minor"
+          resources: {}
+        - name: jx-variables
+          resources: {}
+        - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/make-pip-settings-cda-releases.yaml@versionStream
+          name: ""
+          resources: {}
+        - image: public.ecr.aws/lts/ubuntu:24.04_stable
+          name: python-running-build-tests
+          resources: {}
+          script: |
+            #!/bin/sh
+            set -e
+            export DEBIAN_FRONTEND=noninteractive
+            ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+            . .jx/variables.sh
+            cp pip.conf /etc/ #copy generated pip.conf from previous step make-pip-settings-cda-snapshots.yaml
+            apt-get update -y
+            apt-get install --no-install-recommends -y build-essential python3 python3-dev python3-pip libgl1-mesa-glx libpq-dev
+
+            export PYTHONPATH=$PYTHONPATH:$PWD
+            python3 -m pip install -r requirements.txt --no-cache-dir
+            python3 -m pytest --junitxml /workspace/source/tests.xml --cov=pymlpipeline --cov-config=.coveragerc --cov-report=xml:/workspace/source/coverage.xml
+        - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/python-release-cda-upload.yaml@versionStream
+          name: ""
+          resources: {}
+        - name: promote-changelog
+          resources: {}
+  podTemplate: {}
+  serviceAccountName: tekton-bot
+  timeout: 1h0m0s
+status: {}

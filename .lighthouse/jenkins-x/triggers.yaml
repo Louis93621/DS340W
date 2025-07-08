@@ -1,0 +1,11 @@
+apiVersion: config.lighthouse.jenkins-x.io/v1alpha1
+kind: TriggerConfig
+spec:
+  presubmits:
+
+  postsubmits:
+  - name: release
+    context: "release"
+    source: "release.yaml"
+    branches:
+    - ^dev$
