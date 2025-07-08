@@ -25,13 +25,14 @@ def parse_requirements(filename):
 
 def main():
     package_name = 'vexcel_yolov9'
+    submodule_name = 'models'
     install_reqs = parse_requirements("./requirements.txt")
-    print(os.path.join(os.path.dirname(__file__), package_name))
+    print(os.path.join(os.path.dirname(__file__), submodule_name))
 
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), package_name))
-    import vexcel_yolov9
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), submodule_name))
+    import models
 
-    package_version = vexcel_yolov9.__version__
+    package_version = models.__version__
     if package_version == 'REPLACE':
         default_version = '0.0.1'
         sha = get_sha(Path.cwd())
