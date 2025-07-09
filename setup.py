@@ -49,7 +49,6 @@ def main():
           author='ML team',
           python_requires='>=3.6,<4',
           packages=find_packages(include=['models', 'utils']),
-          py_modules=["yolov9_vx"],
           )        
 
 
