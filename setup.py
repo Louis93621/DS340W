@@ -24,7 +24,7 @@ def parse_requirements(filename):
 
 
 def main():
-    package_name = 'vexcel_yolov9'
+    package_name = 'yolov9-vx'
     submodule_name = 'models'
     install_reqs = parse_requirements("./requirements.txt")
     print(os.path.join(os.path.dirname(__file__), submodule_name))
@@ -48,8 +48,9 @@ def main():
           url='https://github.com/vexcel-data/yolov9.git',
           author='ML team',
           python_requires='>=3.6,<4',
-          packages=find_packages(include=('models', 'models.*', 'utils', 'utils.*')),
-          )
+          packages=find_packages(include=['models', 'utils']),
+          py_modules=["yolov9_vx"],
+          )        
 
 
 if __name__ == '__main__':

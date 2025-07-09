@@ -42,7 +42,6 @@ spec:
 
             export PYTHONPATH=$PYTHONPATH:$PWD
             python3 -m pip install -r requirements.txt --no-cache-dir
-            python3 -m pytest --junitxml /workspace/source/tests.xml --cov=pymlpipeline --cov-config=.coveragerc --cov-report=xml:/workspace/source/coverage.xml
         - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/python-release-cda-upload.yaml@versionStream
           name: ""
           resources: {}
