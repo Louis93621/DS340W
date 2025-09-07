@@ -96,7 +96,10 @@ def run(
         with dt[1]:
             visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
             pred = model(im, augment=augment, visualize=visualize)
-
+            if isinstance(pred, (list, tuple)):
+                pred = next((x for x in pred if isinstance(x, torch.Tensor)), pred[0])
+            if isinstance(pred, list) and pred and isinstance(pred[0], torch.Tensor):
+                pred = pred[0]
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
