@@ -1,0 +1,8 @@
+datasets/
+*.zip
+runs/
+outputs/
+__pycache__/
+*.pt
+*.mov
+*.mp4
